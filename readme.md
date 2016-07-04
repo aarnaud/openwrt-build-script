@@ -1,4 +1,8 @@
-# Banana Pi R1 (Lamobo R1) build
+# Banana Pi R1 (Lamobo R1) OpenWRT build script
+
+## Travis build [![Build Status](https://travis-ci.org/aarnaud/banana-pi-r1-build-script.svg?branch=master)](https://travis-ci.org/aarnaud/banana-pi-r1-build-script)
+
+You can download [here](https://github.com/aarnaud/banana-pi-r1-build-script/releases) the travis build of openwrt for Banana Pi R1
 
 ## Build script
 

@@ -1,0 +1,20 @@
+language: cpp
+
+sudo: true
+before_install:
+- sudo apt-get update -qq
+- sudo apt-get install -y -q git-core build-essential libssl-dev libncurses5-dev unzip gawk subversion mercurial
+
+script:
+- ./build.sh
+
+deploy:
+  provider: releases
+  api_key:
+    secure: lWzE+ZsXNJXL6m4doYshqqJ4yvj6ZKQRjRBFQgRfMbUNweCzHdKihJzuPmQg0gcBBqtkYhDFV/XAfrpdYpvOyPLJq7Orez9eE6dh5v8hHOMh95kHzzQj9+dmRL+oShLU9rHEbql5xie21B3DXMwyCizYakwqw/ZrThukEvwgXu03YaC9V4E0Cu2/2ESUjA9JVxcbUMV3qRJDckqMULsU3IMWa+7kpkA21x+FzBniqw5wpN+5f7Vnl5o9aj+zZk/EHotkMaiiSpowi3fQEToOpjm5Dv36MPSUsltdwzSBnCkDAZMKUwP9mGhGZWdKlYHbEkAhQYxWQyUKKjpM9pvGiwL7WsiycnnUYrVbrDLnli4uCp6wFD7kUWHTugsZjAKb3+q6y4OHMK5ewHv2IXqRe0CfdyYYX6ppEjpWi1VDlipJBerQfyv/CPbgy/MGgk44omPAAf2yr7KbIdQXGrsTAMQgnHGU0GGUn/oKsCe/+shy3a6Dv6ldW9D1pWnKducUVi8nYdLih2+X9gcCeEoNLGoR9du1P1Wam7Wx0UGkf+jHz++Wy3iBAFoVF7nPn0PGmWS+8AAhnGcet0rJagSKcPR34c+0X1gvIOuzn/D8Zr8prqU3ZkAzp7tq46m/mFcECaUe2ooAJoCBemRVMKn7aYVgBS0goeZsUjmMP8QzOaY=
+  file: openwrt/bin/sunxi/openwrt-sunxi-Lamobo_R1-sdcard-vfat-ext4.img.gz
+  overwrite: true
+  skip_cleanup: true
+  on:
+    repo: aarnaud/banana-pi-r1-build-script
+    tags: true

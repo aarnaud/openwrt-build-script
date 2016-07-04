@@ -18,7 +18,6 @@ fi
 cd ${DIR}/openwrt
 git fetch -a
 
-make clean
 git reset --hard HEAD^
 git checkout -f ${OPENWRT_VERSION}
 
@@ -26,7 +25,11 @@ git checkout -f ${OPENWRT_VERSION}
 ./scripts/feeds install -a
 
 cp -r ${DIR}/root_files ${DIR}/openwrt/files
+
 cp ${DIR}/diffconfig ${DIR}/openwrt/.config
 make defconfig
-make -j${nproc} || make V=s # Retry with full log if failed
+
+make clean
+
+make -j$(nproc) || make V=s # Retry with full log if failed
 

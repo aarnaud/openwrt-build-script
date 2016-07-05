@@ -10,8 +10,9 @@ cd ${DIR}
 # Install all necessary packages
 #sudo apt-get install build-essential subversion libncurses5-dev zlib1g-dev gawk gcc-multilib flex git-core libssl-dev unzip
 
-if [[ ! -d openwrt ]]
+if [[ ! -d openwrt/.git ]]
 then
+    rm -rf openwrt
     git clone https://github.com/openwrt/openwrt.git openwrt
 fi
 

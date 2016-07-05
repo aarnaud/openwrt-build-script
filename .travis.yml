@@ -1,9 +1,11 @@
 language: cpp
 
+env:
+  - STAGING_DIR=/tmp/staging_dir
+
 cache:
   directories:
-    - openwrt/staging_dir
-    - openwrt/toolchain
+    - $STAGING_DIR
 
 sudo: true
 before_install:

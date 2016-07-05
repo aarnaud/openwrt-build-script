@@ -12,7 +12,7 @@ lxc info ${CONTAINER_NAME} &> /dev/null || {
         echo 'deb http://pkg.jenkins-ci.org/debian binary/' > /etc/apt/sources.list.d/jenkins.list
         apt-get update
         # Add OpenWRT Prerequisites
-        apt-get install -y git-core build-essential libssl-dev libncurses5-dev unzip gawk subversion mercurial
+        apt-get install -y git-core build-essential libssl-dev libncurses5-dev unzip gawk subversion mercurial gettext
         # Add github-release
         wget https://github.com/aktau/github-release/releases/download/v0.6.2/linux-amd64-github-release.tar.bz2 -O- | tar -xjvf - -C /usr/local/bin/ --strip 3
         # Install Jenkins

@@ -1,8 +1,9 @@
 language: cpp
 
 cache:
+  timeout: 2678400
   directories:
-    - openwrt
+    - openwrt/
 
 sudo: true
 before_install:

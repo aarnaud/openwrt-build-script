@@ -3,9 +3,10 @@ language: cpp
 cache:
   timeout: 2678400
   directories:
-    - openwrt/
+    - openwrt
 
-sudo: true
+dist: trusty
+sudo: required
 before_install:
 - sudo apt-get update -qq
 - sudo apt-get install -y -q git-core build-essential libssl-dev libncurses5-dev unzip gawk subversion mercurial

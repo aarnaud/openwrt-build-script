@@ -1,5 +1,10 @@
 language: cpp
 
+cache:
+  directories:
+    - openwrt/staging_dir
+    - openwrt/toolchain
+
 sudo: true
 before_install:
 - sudo apt-get update -qq

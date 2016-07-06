@@ -8,7 +8,7 @@ node {
    // Mark the code build 'stage'....
    stage 'Build'
    // Run build script
-   bash "./build.sh"
+   sh "./build.sh"
    
    //Upload artifact
    stage 'Publish artifact'

@@ -8,5 +8,10 @@ node {
    // Mark the code build 'stage'....
    stage 'Build'
    // Run build script
-   sh "./build.sh"
+   bash "./build.sh"
+   
+   //Upload artifact
+   stage 'Publish artifact'
+   archive 'openwrt/bin/sunxi/openwrt-sunxi-Lamobo_R1-sdcard-vfat-ext4.img.gz'
+   
 }

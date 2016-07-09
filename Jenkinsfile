@@ -18,7 +18,7 @@ node {
    
    //Upload on github if tag   
    stage 'Publish github release'
-   sh "git tag --contains ${env.GIT_COMMIT} > .git-tag"
+   sh "git tag --contains $(git rev-parse HEAD) > .git-tag"
    def GIT_TAG = readFile('.git-tag').trim()
    sh "rm .git-tag"
    if(GIT_TAG?.trim()){

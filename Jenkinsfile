@@ -23,8 +23,8 @@ node {
    if(GIT_TAG?.trim()){
        stage 'Publish github release'
        withCredentials([[$class: 'StringBinding', credentialsId: 'GithubToken', variable: 'GITHUB_TOKEN']]) {
-           sh "github-release release -s ${GITHUB_TOKEN} -u aarnaud -r banana-pi-r1-build-script -t ${GIT_TAG}"
-           sh "github-release upload -s ${GITHUB_TOKEN} -u aarnaud -r banana-pi-r1-build-script -t ${GIT_TAG} -n openwrt-sunxi-Lamobo_R1-sdcard-vfat-ext4.img.gz -f ${UPLOAD_FILE}"
+           sh "github-release release -u aarnaud -r banana-pi-r1-build-script -t ${GIT_TAG}"
+           sh "github-release upload -u aarnaud -r banana-pi-r1-build-script -t ${GIT_TAG} -n openwrt-sunxi-Lamobo_R1-sdcard-vfat-ext4.img.gz -f ${UPLOAD_FILE}"
        }
    }
 }

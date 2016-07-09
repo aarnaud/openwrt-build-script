@@ -14,7 +14,7 @@ node {
    
    //Upload artifact
    stage 'Publish artifact'
-   archive ${UPLOAD_FILE}
+   archive "${UPLOAD_FILE}"
    
    //Upload on github if tag
    def GIT_TAG = ['git', 'tag', '--contains', env.GIT_COMMIT].execute().text

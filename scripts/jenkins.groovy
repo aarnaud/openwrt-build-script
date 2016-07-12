@@ -3,7 +3,7 @@
 // Mark the code build 'stage'....
 stage 'Build'
 // Run build script
-sh "./build.sh ${env.TARGET}"
+sh "./scripts/build.sh ${env.TARGET}"
 
 //Upload artifact
 stage 'Publish artifact'

@@ -7,7 +7,7 @@ sh "./scripts/build.sh ${env.TARGET}"
 
 //Upload artifact
 stage 'Publish artifact'
-archive "${env.UPLOAD_FILE}"
+archive "${env.ARTIFACT}"
 
 //Upload on github if tag
 sh "git tag --contains `git rev-parse HEAD` > .git-tag"

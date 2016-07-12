@@ -1,0 +1,13 @@
+#!/usr/bin/env groovy
+node {
+    def TARGET = 'mvebu_Caiman'
+    def UPLOAD_FILE = 'openwrt/bin/mvebu/openwrt-mvebu-armada-xp-linksys-caiman-squashfs-factory.img'
+    def ARCHIVE_NAME = 'openwrt-mvebu-armada-xp-linksys-caiman-squashfs-factory.img'
+
+    // Mark the code checkout 'stage'....
+    stage 'Checkout'
+    // Get some code from a GitHub repository
+    checkout scm
+
+    load "scripts/jenkins.groovy"
+}

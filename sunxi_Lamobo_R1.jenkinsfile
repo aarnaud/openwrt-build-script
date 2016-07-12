@@ -4,5 +4,10 @@ node {
     def UPLOAD_FILE = 'openwrt/bin/sunxi/openwrt-sunxi-Lamobo_R1-sdcard-vfat-ext4.img.gz'
     def ARCHIVE_NAME = 'openwrt-sunxi-Lamobo_R1-sdcard-vfat-ext4.img.gz'
 
+    // Mark the code checkout 'stage'....
+    stage 'Checkout'
+    // Get some code from a GitHub repository
+    checkout scm
+
     load "scripts/jenkins.groovy"
 }

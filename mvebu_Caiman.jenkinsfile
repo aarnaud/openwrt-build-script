@@ -1,8 +1,8 @@
 #!/usr/bin/env groovy
 node {
     def TARGET = 'mvebu_Caiman'
-    def UPLOAD_FILE = 'openwrt/bin/mvebu/openwrt-mvebu-armada-xp-linksys-caiman-squashfs-factory.img'
-    def ARCHIVE_NAME = 'openwrt-mvebu-armada-xp-linksys-caiman-squashfs-factory.img'
+    def UPLOAD_FILE = 'openwrt/bin/mvebu/openwrt-mvebu-armada-385-linksys-caiman-squashfs-factory.img'
+    def ARCHIVE_NAME = 'openwrt-mvebu-armada-385-linksys-caiman-squashfs-factory.img'
 
     // Mark the code checkout 'stage'....
     stage 'Checkout'

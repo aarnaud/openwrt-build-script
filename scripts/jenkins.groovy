@@ -21,7 +21,7 @@ def githubRelease(UPLOAD_FILE, ARCHIVE_NAME) {
     if (GIT_TAG) {
         stage 'Publish github release'
         withCredentials([[$class: 'StringBinding', credentialsId: 'GithubToken', variable: 'GITHUB_TOKEN']]) {
-            sh "github-release release -u aarnaud -r openwrt-build-script -t ${GIT_TAG}"
+            sh "github-release info -u aarnaud -r openwrt-build-script -t ${GIT_TAG} || github-release release -u aarnaud -r openwrt-build-script -t ${GIT_TAG}"
             sh "github-release upload -u aarnaud -r openwrt-build-script -t ${GIT_TAG} -n ${ARCHIVE_NAME} -f ${UPLOAD_FILE}"
         }
     }

@@ -11,7 +11,7 @@ node {
 
     load "scripts/jenkins.groovy"
     
-    build(${TARGET})
-    publishArtifact(${UPLOAD_FILE})
-    githubRelease(${UPLOAD_FILE}, ${ARCHIVE_NAME})
+    build(TARGET)
+    publishArtifact(UPLOAD_FILE)
+    githubRelease(UPLOAD_FILE, ARCHIVE_NAME)
 }

@@ -9,9 +9,9 @@ node {
     // Get some code from a GitHub repository
     checkout scm
 
-    load "scripts/jenkins.groovy"
+    tools = load "scripts/jenkins.groovy"
     
-    build(TARGET)
-    publishArtifact(UPLOAD_FILE)
-    githubRelease(UPLOAD_FILE, ARCHIVE_NAME)
+    tools.build(TARGET)
+    tools.publishArtifact(UPLOAD_FILE)
+    tools.githubRelease(UPLOAD_FILE, ARCHIVE_NAME)
 }

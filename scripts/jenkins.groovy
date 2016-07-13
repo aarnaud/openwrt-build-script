@@ -26,3 +26,5 @@ def githubRelease(UPLOAD_FILE, ARCHIVE_NAME) {
         }
     }
 }
+
+this

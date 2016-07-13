@@ -7,7 +7,8 @@ sh "./scripts/build.sh ${env.TARGET}"
 
 //Upload artifact
 stage 'Publish artifact'
-archive "${env.ARTIFACT}"
+def UPLOAD_FILE = "../${env.UPLOAD_FILE}"
+archive "${UPLOAD_FILE}"
 
 //Upload on github if tag
 sh "git tag --contains `git rev-parse HEAD` > .git-tag"
@@ -17,6 +18,6 @@ if (GIT_TAG) {
     stage 'Publish github release'
     withCredentials([[$class: 'StringBinding', credentialsId: 'GithubToken', variable: 'GITHUB_TOKEN']]) {
         sh "github-release release -u aarnaud -r openwrt-build-script -t ${GIT_TAG}"
-        sh "github-release upload -u aarnaud -r openwrt-build-script -t ${GIT_TAG} -n ${env.ARCHIVE_NAME} -f ${env.UPLOAD_FILE}"
+        sh "github-release upload -u aarnaud -r openwrt-build-script -t ${GIT_TAG} -n ${env.ARCHIVE_NAME} -f ${UPLOAD_FILE}"
     }
 }

@@ -1,8 +1,8 @@
 #!/usr/bin/env groovy
 node {
-    env.TARGET = 'sunxi_Lamobo_R1'
-    env.UPLOAD_FILE = "openwrt/bin/sunxi/openwrt-sunxi-Lamobo_R1-sdcard-vfat-ext4.img.gz"
-    env.ARCHIVE_NAME = 'openwrt-sunxi-Lamobo_R1-sdcard-vfat-ext4.img.gz'
+    def TARGET = 'sunxi_Lamobo_R1'
+    def UPLOAD_FILE = "openwrt/bin/sunxi/openwrt-sunxi-Lamobo_R1-sdcard-vfat-ext4.img.gz"
+    def ARCHIVE_NAME = 'openwrt-sunxi-Lamobo_R1-sdcard-vfat-ext4.img.gz'
 
     // Mark the code checkout 'stage'....
     stage 'Checkout'
@@ -10,4 +10,8 @@ node {
     checkout scm
 
     load "scripts/jenkins.groovy"
+    
+    build(${TARGET})
+    publishArtifact(${UPLOAD_FILE})
+    githubRelease(${UPLOAD_FILE}, ${ARCHIVE_NAME})
 }

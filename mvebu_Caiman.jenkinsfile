@@ -1,8 +1,8 @@
 #!/usr/bin/env groovy
 node {
-    env.TARGET = 'mvebu_Caiman'
-    env.UPLOAD_FILE = "openwrt/bin/mvebu/openwrt-mvebu-armada-385-linksys-caiman-squashfs-factory.img"
-    env.ARCHIVE_NAME = 'openwrt-mvebu-armada-385-linksys-caiman-squashfs-factory.img'
+    def TARGET = 'mvebu_Caiman'
+    def UPLOAD_FILE = "openwrt/bin/mvebu/openwrt-mvebu-armada-385-linksys-caiman-squashfs-factory.img"
+    def ARCHIVE_NAME = 'openwrt-mvebu-armada-385-linksys-caiman-squashfs-factory.img'
 
     // Mark the code checkout 'stage'....
     stage 'Checkout'
@@ -10,4 +10,8 @@ node {
     checkout scm
 
     load "scripts/jenkins.groovy"
+    
+    build(${TARGET})
+    publishArtifact(${UPLOAD_FILE})
+    githubRelease(${UPLOAD_FILE}, ${ARCHIVE_NAME})
 }

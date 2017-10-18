@@ -1,8 +1,8 @@
 #!/usr/bin/env groovy
 node {
-    def TARGET = 'mvebu_Mamba'
-    def UPLOAD_FILE = "openwrt/bin/mvebu/openwrt-mvebu-armada-xp-linksys-mamba-squashfs-factory.img"
-    def ARCHIVE_NAME = 'openwrt-mvebu-armada-xp-linksys-mamba-squashfs-factory.img'
+    def TARGET = 'linksys-wrt1900ac'
+    def UPLOAD_FILE = "openwrt/bin/targets/mvebu/generic/lede-17.01.4-mvebu-linksys-wrt1900ac-squashfs-sysupgrade.bin"
+    def ARCHIVE_NAME = 'lede-17.01.4-mvebu-linksys-wrt1900ac-squashfs-sysupgrade.bin'
 
     // Mark the code checkout 'stage'....
     stage 'Checkout'

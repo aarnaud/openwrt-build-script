@@ -3,7 +3,7 @@ set -e
 set -x
 
 TARGET=$1
-OPENWRT_VERSION="chaos_calmer"
+OPENWRT_VERSION="v17.01.4"
 
 
 SCRIPTS_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
@@ -11,12 +11,12 @@ ROOT_DIR=${SCRIPTS_DIR}/..
 cd ${ROOT_DIR}
 
 # Install all necessary packages
-#sudo apt-get install build-essential subversion libncurses5-dev zlib1g-dev gawk gcc-multilib flex git-core libssl-dev unzip
+#sudo apt-get install build-essential subversion libncurses5-dev zlib1g-dev gawk gcc-multilib flex git-core libssl-dev unzip python wget
 
 if [[ ! -d openwrt/.git ]]
 then
     rm -rf openwrt
-    git clone https://github.com/openwrt/openwrt.git openwrt
+    git clone https://github.com/lede-project/source.git openwrt
 fi
 
 cd ${ROOT_DIR}/openwrt
@@ -29,7 +29,7 @@ git checkout -f ${OPENWRT_VERSION}
 ./scripts/feeds install -a
 
 # Patch kernel config to enable nf_conntrack_events
-patch ${ROOT_DIR}/openwrt/target/linux/generic/config-3.18 < ${ROOT_DIR}/configs/kernel-config.patch
+patch ${ROOT_DIR}/openwrt/target/linux/generic/config-4.4 < ${ROOT_DIR}/configs/kernel-config.patch
 
 rm -rf ${ROOT_DIR}/openwrt/files
 cp -r ${ROOT_DIR}/root_files ${ROOT_DIR}/openwrt/files

@@ -1,8 +1,8 @@
 #!/usr/bin/env groovy
 node {
     def TARGET = 'linksys-wrt1900ac'
-    def UPLOAD_FILE = "openwrt/bin/targets/mvebu/generic/lede-17.01.4-mvebu-linksys-wrt1900ac-squashfs-sysupgrade.bin"
-    def ARCHIVE_NAME = 'lede-17.01.4-mvebu-linksys-wrt1900ac-squashfs-sysupgrade.bin'
+    def UPLOAD_FILE = "openwrt/bin/targets/mvebu/cortexa9/lede-18.06.1-mvebu-cortexa9-linksys-wrt1900ac-squashfs-sysupgrade.bin"
+    def ARCHIVE_NAME = 'lede-18.06.1-mvebu-cortexa9-linksys-wrt1900ac-squashfs-sysupgrade.bin'
 
     // Mark the code checkout 'stage'....
     stage 'Checkout'

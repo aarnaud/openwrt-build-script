@@ -1,0 +1,17 @@
+#!/usr/bin/env groovy
+node {
+    def TARGET = 'x86'
+    def UPLOAD_FILE = "openwrt/bin/targets/x86/64/openwrt-x86-64-combined-ext4.img.gz"
+    def ARCHIVE_NAME = "openwrt-x86-64-combined-ext4.img.gz"
+
+    // Mark the code checkout 'stage'....
+    stage 'Checkout'
+    // Get some code from a GitHub repository
+    checkout scm
+
+    tools = load "scripts/jenkins.groovy"
+    
+    tools.build(TARGET)
+    tools.publishArtifact(UPLOAD_FILE)
+    tools.githubRelease(UPLOAD_FILE, ARCHIVE_NAME)
+}

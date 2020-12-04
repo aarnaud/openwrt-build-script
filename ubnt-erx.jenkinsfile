@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 node {
     def TARGET = 'ubnt-erx'
-    def UPLOAD_FILE = "openwrt/bin/targets/ramips/mt7621/openwrt-ramips-mt7621-ubnt-erx-squashfs-sysupgrade.tar"
+    def UPLOAD_FILE = "openwrt/bin/targets/ramips/mt7621/openwrt-ramips-mt7621-ubnt-erx-squashfs-sysupgrade.bin"
     def ARCHIVE_NAME = 'openwrt-ramips-mt7621-ubnt-erx-squashfs-sysupgrade.tar'
 
     // Mark the code checkout 'stage'....

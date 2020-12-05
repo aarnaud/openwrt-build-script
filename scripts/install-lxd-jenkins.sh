@@ -14,7 +14,7 @@ lxc info ${CONTAINER_NAME} &> /dev/null || {
         # Add OpenWRT Prerequisites
         apt-get install -y git-core build-essential libssl-dev libncurses5-dev unzip gawk subversion mercurial gettext
         # Add github-release
-        wget https://github.com/aktau/github-release/releases/download/v0.6.2/linux-amd64-github-release.tar.bz2 -O- | tar -xjvf - -C /usr/local/bin/ --strip 3
+        wget https://github.com/github-release/github-release/releases/download/v0.9.0/linux-amd64-github-release.bz2 -O- | bzip2 -d > /usr/local/bin/github-release && chmod +x /usr/local/bin/github-release
         # Install Jenkins
         apt-get install -y jenkins
         sleep 5

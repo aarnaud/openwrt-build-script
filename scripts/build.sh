@@ -37,7 +37,10 @@ cp -r ${ROOT_DIR}/root_files ${ROOT_DIR}/openwrt/files
 cp ${ROOT_DIR}/configs/${TARGET}.config ${ROOT_DIR}/openwrt/.config
 make defconfig
 
-make clean
+if [[ "${CLEAN_BUILD}" == "true" ]]
+then
+    make clean
+fi
 
 make -j$(nproc) || make V=s # Retry with full log if failed
 

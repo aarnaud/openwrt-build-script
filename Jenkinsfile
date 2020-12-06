@@ -12,6 +12,9 @@ def ARCHIVES_PATH = [
 
 pipeline {
     agent none
+    parameters {
+        booleanParam(name: 'CLEAN_BUILD', defaultValue: false, description: 'deletes contents of the directories /bin and /build_dir.')
+    }
     stages {
         stage('BuildAndPublish') {
             matrix {
@@ -24,6 +27,9 @@ pipeline {
                 }
                 stages {
                     stage('Build') {
+                        environment {
+                            CLEAN_BUILD  = "${params.CLEAN_BUILD}"
+                        }
                         steps {
                             sh "./scripts/build.sh ${TARGET}"
                         }

@@ -13,7 +13,7 @@ def ARCHIVES_PATH = [
 pipeline {
     agent none
     parameters {
-        booleanParam(name: 'CLEAN_BUILD', defaultValue: false, description: 'deletes contents of the directories /bin and /build_dir.')
+        booleanParam(name: 'CLEAN_BUILD', defaultValue: true, description: 'deletes contents of the directories /bin and /build_dir.')
     }
     stages {
         stage('BuildAndPublish') {

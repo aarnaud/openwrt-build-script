@@ -37,12 +37,12 @@ pipeline {
                         when {
                             buildingTag()
                         }
+                        environment {
+                            UPLOAD_FILE  = "${ARCHIVES_PATH[TARGET]}"
+                            ARCHIVE_NAME = "${new File(UPLOAD_FILE).getName()}"
+                        }
                         steps {
                             withCredentials([[$class: 'StringBinding', credentialsId: 'GithubToken', variable: 'GITHUB_TOKEN']]) {
-                                script {
-                                    def UPLOAD_FILE = ARCHIVES_PATH[TARGET]
-                                    def ARCHIVE_NAME = new File(UPLOAD_FILE).getName()
-                                }
                                 sh "github-release info -u aarnaud -r openwrt-build-script -t ${TAG_NAME} || github-release release -u aarnaud -r openwrt-build-script -t ${TAG_NAME}"
                                 sh "github-release upload -u aarnaud -r openwrt-build-script -t ${TAG_NAME} -n ${ARCHIVE_NAME} -f ${UPLOAD_FILE}"
                             }

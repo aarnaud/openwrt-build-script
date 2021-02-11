@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-def ARCHIVES_PATH = [
+ARCHIVES_PATH = [
     "lamobo_R1": "openwrt/bin/targets/sunxi/cortexa7/openwrt-sunxi-cortexa7-sun7i-a20-lamobo-r1-ext4-sdcard.img.gz",
     "linksys-wrt1200ac": "openwrt/bin/targets/mvebu/cortexa9/openwrt-mvebu-cortexa9-linksys_wrt1200ac-squashfs-sysupgrade.bin",
     "linksys-wrt1900ac": "openwrt/bin/targets/mvebu/cortexa9/openwrt-mvebu-cortexa9-linksys_wrt1900ac-squashfs-sysupgrade.bin",

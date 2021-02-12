@@ -36,7 +36,7 @@ pipeline {
                     }
                     stage('Publish artifact') {
                         steps {
-                            archive "${ARCHIVES_PATH[TARGET]}"
+                            archiveArtifacts artifacts: "${ARCHIVES_PATH[TARGET]}"
                         }
                     }
                     stage('Publish github release') {

@@ -33,6 +33,7 @@ patch ${ROOT_DIR}/openwrt/target/linux/generic/config-4.14 < ${ROOT_DIR}/configs
 
 rm -rf ${ROOT_DIR}/openwrt/files
 cp -r ${ROOT_DIR}/root_files ${ROOT_DIR}/openwrt/files
+chmod 755 ${ROOT_DIR}/openwrt/files/etc/dropbear
 
 cp ${ROOT_DIR}/configs/${TARGET}.config ${ROOT_DIR}/openwrt/.config
 make defconfig

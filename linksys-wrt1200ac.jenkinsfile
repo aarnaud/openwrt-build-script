@@ -4,15 +4,17 @@ node {
     def UPLOAD_FILE = "openwrt/bin/targets/mvebu/cortexa9/openwrt-mvebu-cortexa9-linksys_wrt1200ac-squashfs-sysupgrade.bin"
     def ARCHIVE_NAME = 'openwrt-mvebu-cortexa9-linksys_wrt1200ac-squashfs-sysupgrade.bin'
 
-    // Mark the code checkout 'stage'....
-    stage('Checkout') {
-      // Get some code from a GitHub repository
-      checkout scm
-    }
+    ws("${WORKSPACE}/../openwrt-build-script") {
+      // Mark the code checkout 'stage'....
+      stage('Checkout') {
+        // Get some code from a GitHub repository
+        checkout scm
+      }
 
-    tools = load "scripts/jenkins.groovy"
-    
-    tools.build(TARGET)
-    tools.publishArtifact(UPLOAD_FILE)
-    tools.githubRelease(UPLOAD_FILE, ARCHIVE_NAME)
+      tools = load "scripts/jenkins.groovy"
+
+      tools.build(TARGET)
+      tools.publishArtifact(UPLOAD_FILE)
+      tools.githubRelease(UPLOAD_FILE, ARCHIVE_NAME)
+    }
 }

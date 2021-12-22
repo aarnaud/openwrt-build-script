@@ -4,15 +4,17 @@ node {
     def UPLOAD_FILE = "openwrt/bin/targets/sunxi/cortexa7/openwrt-sunxi-cortexa7-sun7i-a20-lamobo-r1-ext4-sdcard.img.gz"
     def ARCHIVE_NAME = 'openwrt-sunxi-cortexa7-sun7i-a20-lamobo-r1-ext4-sdcard.img.gz'
 
-    // Mark the code checkout 'stage'....
-    stage('Checkout') {
-      // Get some code from a GitHub repository
-      checkout scm
+    ws("${WORKSPACE}/../openwrt-build-script") {
+      // Mark the code checkout 'stage'....
+      stage('Checkout') {
+        // Get some code from a GitHub repository
+        checkout scm
+      }
+
+      tools = load "scripts/jenkins.groovy"
+
+      tools.build(TARGET)
+      tools.publishArtifact(UPLOAD_FILE)
+      tools.githubRelease(UPLOAD_FILE, ARCHIVE_NAME)
     }
- 
-    tools = load "scripts/jenkins.groovy"
-    
-    tools.build(TARGET)
-    tools.publishArtifact(UPLOAD_FILE)
-    tools.githubRelease(UPLOAD_FILE, ARCHIVE_NAME)
 }

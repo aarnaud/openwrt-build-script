@@ -4,15 +4,17 @@ node {
     def UPLOAD_FILE = "openwrt/bin/targets/ramips/mt7621/openwrt-ramips-mt7621-ubnt-erx-squashfs-sysupgrade.bin"
     def ARCHIVE_NAME = 'openwrt-ramips-mt7621-ubnt-erx-squashfs-sysupgrade.tar'
 
-    // Mark the code checkout 'stage'....
-    stage('Checkout') {
-      // Get some code from a GitHub repository
-      checkout scm
-    }
+    ws("${WORKSPACE}/../openwrt-build-script") {
+      // Mark the code checkout 'stage'....
+      stage('Checkout') {
+        // Get some code from a GitHub repository
+        checkout scm
+      }
 
-    tools = load "scripts/jenkins.groovy"
-    
-    tools.build(TARGET)
-    tools.publishArtifact(UPLOAD_FILE)
-    tools.githubRelease(UPLOAD_FILE, ARCHIVE_NAME)
+      tools = load "scripts/jenkins.groovy"
+
+      tools.build(TARGET)
+      tools.publishArtifact(UPLOAD_FILE)
+      tools.githubRelease(UPLOAD_FILE, ARCHIVE_NAME)
+    }
 }

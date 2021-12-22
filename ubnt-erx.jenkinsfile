@@ -5,9 +5,10 @@ node {
     def ARCHIVE_NAME = 'openwrt-ramips-mt7621-ubnt-erx-squashfs-sysupgrade.tar'
 
     // Mark the code checkout 'stage'....
-    stage 'Checkout'
-    // Get some code from a GitHub repository
-    checkout scm
+    stage('Checkout') {
+      // Get some code from a GitHub repository
+      checkout scm
+    }
 
     tools = load "scripts/jenkins.groovy"
     

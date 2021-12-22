@@ -5,9 +5,10 @@ node {
     def ARCHIVE_NAME = 'openwrt-sunxi-cortexa7-sun7i-a20-lamobo-r1-ext4-sdcard.img.gz'
 
     // Mark the code checkout 'stage'....
-    stage 'Checkout'
-    // Get some code from a GitHub repository
-    checkout scm
+    stage('Checkout') {
+      // Get some code from a GitHub repository
+      checkout scm
+    }
  
     tools = load "scripts/jenkins.groovy"
     

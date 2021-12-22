@@ -5,9 +5,10 @@ node {
     def ARCHIVE_NAME = 'openwrt-mvebu-cortexa9-linksys_wrt1900ac-squashfs-sysupgrade.bin'
 
     // Mark the code checkout 'stage'....
-    stage 'Checkout'
-    // Get some code from a GitHub repository
-    checkout scm
+    stage('Checkout') {
+      // Get some code from a GitHub repository
+      checkout scm
+    }
 
     tools = load "scripts/jenkins.groovy"
     

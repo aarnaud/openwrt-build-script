@@ -13,6 +13,7 @@ cd ${ROOT_DIR}
 export CONFIG_CCACHE=y
 export CCACHE_DIR=/mnt/ccache
 export CCACHE_MAXSIZE=10G
+export CCACHE_COMPILERCHECK="%compiler% -dumpmachine; %compiler% -dumpversion"
 
 # Install all necessary packages
 #sudo apt-get install build-essential subversion libncurses5-dev zlib1g-dev gawk gcc-multilib flex git-core libssl-dev unzip python wget time

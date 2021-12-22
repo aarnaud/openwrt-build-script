@@ -4,7 +4,7 @@ def build(TARGET) {
     // Mark the code build 'stage'....
     stage('Build') {
       def builder = docker.build("openwrt:${env.BUILD_ID}", ".")
-      builder.inside {
+      builder.inside("-v ${HOME}/.ccache:/mnt/ccache") {
         // Run build script
         sh "./scripts/build.sh ${TARGET}"
       }

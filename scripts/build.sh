@@ -10,6 +10,10 @@ SCRIPTS_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 ROOT_DIR=${SCRIPTS_DIR}/..
 cd ${ROOT_DIR}
 
+export CONFIG_CCACHE=y
+export CCACHE_DIR=/mnt/ccache
+export CCACHE_MAXSIZE=10G
+
 # Install all necessary packages
 #sudo apt-get install build-essential subversion libncurses5-dev zlib1g-dev gawk gcc-multilib flex git-core libssl-dev unzip python wget time
 
@@ -38,7 +42,7 @@ chmod 755 ${ROOT_DIR}/openwrt/files/etc/dropbear
 cp ${ROOT_DIR}/configs/${TARGET}.config ${ROOT_DIR}/openwrt/.config
 make defconfig
 
-if [[ "${CLEAN_BUILD}" == "true" ]]
+if [[ "${CLEAN_BUILD}" == "true" || "${CONFIG_CCACHE}" == "y" ]]
 then
     make clean
 fi

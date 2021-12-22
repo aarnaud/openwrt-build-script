@@ -3,8 +3,11 @@
 def build(TARGET) {
     // Mark the code build 'stage'....
     stage 'Build'
-    // Run build script
-    sh "./scripts/build.sh ${TARGET}"
+    def builder = docker.build("openwrt:${env.BUILD_ID}", ".")
+    builder.inside {
+      // Run build script
+      sh "./scripts/build.sh ${TARGET}"
+    }
 }
 
 def publishArtifact(UPLOAD_FILE) {

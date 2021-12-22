@@ -13,7 +13,7 @@ def build(TARGET) {
 def publishArtifact(UPLOAD_FILE) {
     //Upload artifact
     stage 'Publish artifact'
-    archive "${UPLOAD_FILE}"
+    archiveArtifacts artifacts: "${UPLOAD_FILE}"
 }
 
 def githubRelease(UPLOAD_FILE, ARCHIVE_NAME) {

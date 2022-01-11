@@ -54,5 +54,10 @@ then
     make clean
 fi
 
+#  If you try compiling OpenWrt on multiple cores and don't download all source files for all dependency packages
+#  it is very likely that your build will fail.
+# https://openwrt.org/docs/guide-developer/toolchain/use-buildsystem#download_sources_and_multi_core_compile
+make download
+
 make -j$(nproc) || make V=s # Retry with full log if failed
 

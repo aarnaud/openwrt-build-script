@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
+
 def build(TARGET) {
     // Mark the code build 'stage'....
     stage('Build') {
@@ -23,12 +25,14 @@ def githubRelease(UPLOAD_FILE, ARCHIVE_NAME) {
     sh "git tag --contains `git rev-parse HEAD` > .git-tag"
     def GIT_TAG = readFile('.git-tag').trim()
     sh "rm .git-tag"
-    if (GIT_TAG) {
-        stage('Publish github release') {
-          withCredentials([[$class: 'StringBinding', credentialsId: 'GithubToken', variable: 'GITHUB_TOKEN']]) {
+    stage('Publish github release') {
+        if (!GIT_TAG) {
+            Utils.markStageSkippedForConditional(STAGE_NAME)
+        } else {
+            withCredentials([[$class: 'StringBinding', credentialsId: 'GithubToken', variable: 'GITHUB_TOKEN']]) {
               sh "github-release info -u aarnaud -r openwrt-build-script -t ${GIT_TAG} || github-release release -u aarnaud -r openwrt-build-script -t ${GIT_TAG}"
               sh "github-release upload -u aarnaud -r openwrt-build-script -t ${GIT_TAG} -n ${ARCHIVE_NAME} -f ${UPLOAD_FILE}"
-          }
+            }
         }
     }
 }

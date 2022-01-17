@@ -8,19 +8,19 @@ Map ARCHIVES_PATH = [
     "linksys-wrt1900ac": "openwrt/bin/targets/mvebu/cortexa9/openwrt-mvebu-cortexa9-linksys_wrt1900ac-v1-squashfs-sysupgrade.bin",
     "ubnt-erx": "openwrt/bin/targets/ramips/mt7621/openwrt-ramips-mt7621-ubnt_edgerouter-x-squashfs-sysupgrade.bin",
     "unifiac": "openwrt/bin/targets/ath79/generic/openwrt-ath79-generic-ubnt_unifiac-pro-squashfs-sysupgrade.bin",
-    "x86": "openwrt/bin/targets/x86/64/openwrt-x86-64-combined-ext4.img.gz"
+    "x86": "openwrt/bin/targets/x86/64/openwrt-x86-64-generic-ext4-combined-efi.img.gz"
 ]
 
-List target_choices = ARCHIVES_PATH.keySet() as String[]
+String target_choices = (ARCHIVES_PATH.keySet() as String[]).join(',')
 
 properties([
     parameters([
         booleanParam(name: 'CLEAN_BUILD', defaultValue: true, description: 'deletes contents of the directories /bin and /build_dir.'),
-        choice(name: 'TARGET', choices: target_choices, description: 'Target')
+        extendedChoice(defaultValue: "${target_choices}", description: 'Which target to build', multiSelectDelimiter: ',', name: 'TARGETS', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_MULTI_SELECT', value: "${target_choices}", visibleItemCount: 6),
     ])
 ])
 
-String[] TARGETS = params.TARGET ? [params.TARGET] : target_choices
+String[] TARGETS =  params.TARGETS.split(',')
 
 // parallel task map
 Map tasks = [failFast: false]
@@ -28,13 +28,13 @@ Map tasks = [failFast: false]
 TARGETS.each { target ->
     tasks[target] = { ->
         node {
-            stage('Checkout') {
-                // Get some code from a GitHub repository
-                checkout scm
-            }
             def UPLOAD_FILE = ARCHIVES_PATH[target]
             def ARCHIVE_NAME = FilenameUtils.getBaseName(UPLOAD_FILE)
             ws("${WORKSPACE}/../openwrt-build-script") {
+                stage('Checkout') {
+                    // Get some code from a GitHub repository
+                    checkout scm
+                }
                 // Mark the code checkout 'stage'....
                 tools = load "scripts/jenkins.groovy"
                 tools.build(target)

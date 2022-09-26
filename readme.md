@@ -1,4 +1,4 @@
-# OpenWRT build script
+# OpenWRT build script
 
 ## Jenkins build
 

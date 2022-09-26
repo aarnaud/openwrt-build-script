@@ -2,9 +2,7 @@
 
 ## Jenkins build
 
-- Banana Pi R1 (Lamobo R1) [![Build Status](https://jenkins.bluelogon.net/buildStatus/icon?job=OpenWRT-BananaPiR1)](https://jenkins.bluelogon.net/job/OpenWRT-BananaPiR1/)
-
-You can download [here](https://github.com/aarnaud/banana-pi-r1-build-script/releases) the Jenkins build of openwrt for Banana Pi R1
+You can download [here](https://github.com/aarnaud/openwrt-build-script/releases)
 
 ## Build script
 

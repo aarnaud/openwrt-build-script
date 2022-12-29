@@ -7,6 +7,7 @@ Map ARCHIVES_PATH = [
     "linksys-wrt1200ac": "openwrt/bin/targets/mvebu/cortexa9/openwrt-mvebu-cortexa9-linksys_wrt1200ac-squashfs-sysupgrade.bin",
     "linksys-wrt1900ac": "openwrt/bin/targets/mvebu/cortexa9/openwrt-mvebu-cortexa9-linksys_wrt1900ac-v1-squashfs-sysupgrade.bin",
     "ubnt-erx": "openwrt/bin/targets/ramips/mt7621/openwrt-ramips-mt7621-ubnt_edgerouter-x-squashfs-sysupgrade.bin",
+    "gl-mt1300": "openwrt/bin/targets/ramips/mt7621/openwrt-ramips-mt7621-glinet_gl-mt1300-squashfs-sysupgrade.bin",
     "unifiac": "openwrt/bin/targets/ath79/generic/openwrt-ath79-generic-ubnt_unifiac-pro-squashfs-sysupgrade.bin",
     "x86": "openwrt/bin/targets/x86/64/openwrt-x86-64-generic-ext4-combined-efi.img.gz"
 ]

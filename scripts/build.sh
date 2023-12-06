@@ -19,6 +19,7 @@ then
   export CCACHE_DIR=${CCACHE_DIR:-default /mnt/ccache}
   export CCACHE_MAXSIZE=10G
   export CCACHE_COMPILERCHECK="%compiler% -dumpmachine; %compiler% -dumpversion"
+  mkdir -p ${CCACHE_DIR}
 else
   export CLEAN_BUILD=true
 fi

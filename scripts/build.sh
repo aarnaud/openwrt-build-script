@@ -8,6 +8,7 @@ OPENWRT_VERSION="v22.03.4"
 
 SCRIPTS_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 ROOT_DIR=${SCRIPTS_DIR}/..
+OPENWRT_DIR="${OPENWRT_DIR:-default ${ROOT_DIR}/openwrt}"
 cd ${ROOT_DIR}
 
 if [[ "${TARGET}" != "lamobo_R1" ]]
@@ -15,7 +16,7 @@ then
   # issue on lamobo_R1
   # ERROR: package/network/services/ppp failed to build (build variant: default)
   export CONFIG_CCACHE=y
-  export CCACHE_DIR=/mnt/ccache
+  export CCACHE_DIR=${CCACHE_DIR:-default /mnt/ccache}
   export CCACHE_MAXSIZE=10G
   export CCACHE_COMPILERCHECK="%compiler% -dumpmachine; %compiler% -dumpversion"
 else
@@ -24,26 +25,26 @@ fi
 # Install all necessary packages
 #sudo apt-get install build-essential subversion libncurses5-dev zlib1g-dev gawk gcc-multilib flex git-core libssl-dev unzip python wget time
 
-if [[ ! -d openwrt/.git ]]
+if [[ ! -d ${OPENWRT_DIR}/.git ]]
 then
-    rm -rf openwrt
+    rm -rf ${OPENWRT_DIR}
     git clone https://github.com/openwrt/openwrt.git openwrt
 fi
 
-cd ${ROOT_DIR}/openwrt
+cd ${OPENWRT_DIR}
 git fetch -a
 
 git reset --hard HEAD^
 git checkout -f ${OPENWRT_VERSION}
 
 # Patch kernel config to enable nf_conntrack_events
-patch ${ROOT_DIR}/openwrt/target/linux/generic/config-5.10 < ${ROOT_DIR}/configs/kernel-config.patch
+patch ${OPENWRT_DIR}/target/linux/generic/config-5.10 < ${ROOT_DIR}/configs/kernel-config.patch
 
-rm -rf ${ROOT_DIR}/openwrt/files
-cp -r ${ROOT_DIR}/root_files ${ROOT_DIR}/openwrt/files
-chmod 755 ${ROOT_DIR}/openwrt/files/etc/dropbear
+rm -rf ${OPENWRT_DIR}/files
+cp -r ${ROOT_DIR}/root_files ${OPENWRT_DIR}/files
+chmod 755 ${OPENWRT_DIR}/files/etc/dropbear
 
-cp ${ROOT_DIR}/configs/${TARGET}.config ${ROOT_DIR}/openwrt/.config
+cp ${ROOT_DIR}/configs/${TARGET}.config ${OPENWRT_DIR}/.config
 make defconfig
 
 ./scripts/feeds update -a -f

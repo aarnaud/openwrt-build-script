@@ -28,7 +28,7 @@ fi
 if [[ ! -d ${OPENWRT_DIR}/.git ]]
 then
     rm -rf ${OPENWRT_DIR}
-    git clone https://github.com/openwrt/openwrt.git openwrt
+    git clone https://github.com/openwrt/openwrt.git ${OPENWRT_DIR}
 fi
 
 cd ${OPENWRT_DIR}

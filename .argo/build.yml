@@ -1,0 +1,242 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: openwrt-build
+spec:
+  serviceAccountName: default
+  entrypoint: entrypoint
+  arguments:
+    parameters:
+    - name: gh-repo
+      value: aarnaud/openwrt-build-script
+    - name: git-ref
+      value: master
+    - name: targets
+      value: |
+        [
+          { "name": "lamobo-r1", "target": "lamobo_R1", "artifact": "bin/targets/sunxi/cortexa7/openwrt-sunxi-cortexa7-lamobo_lamobo-r1-ext4-sdcard.img.gz" },
+          { "name": "linksys-wrt1200ac", "target": "linksys-wrt1200ac", "artifact": "bin/targets/mvebu/cortexa9/openwrt-mvebu-cortexa9-linksys_wrt1200ac-squashfs-sysupgrade.bin" },
+          { "name": "linksys-wrt1900ac", "target": "linksys-wrt1900ac", "artifact": "bin/targets/mvebu/cortexa9/openwrt-mvebu-cortexa9-linksys_wrt1900ac-v1-squashfs-sysupgrade.bin" },
+          { "name": "ubnt-erx", "target": "ubnt-erx", "artifact": "bin/targets/ramips/mt7621/openwrt-ramips-mt7621-ubnt_edgerouter-x-squashfs-sysupgrade.bin" },
+          { "name": "gl-mt1300", "target": "gl-mt1300", "artifact": "bin/targets/ramips/mt7621/openwrt-ramips-mt7621-glinet_gl-mt1300-squashfs-sysupgrade.bin" },
+          { "name": "unifiac", "target": "unifiac", "artifact": "bin/targets/ath79/generic/openwrt-ath79-generic-ubnt_unifiac-pro-squashfs-sysupgrade.bin" },
+          { "name": "x86", "target": "x86", "artifact": "bin/targets/x86/64/openwrt-x86-64-generic-ext4-combined-efi.img.gz" }
+        ]
+  templates:
+  - name: entrypoint
+    inputs:
+      parameters:
+      - name: targets
+      - name: gh-repo
+      - name: git-ref
+    steps:
+    - - name: "start"
+        template: steps
+        arguments:
+          parameters:
+            - name: targetName
+              value: "{{item.name}}"
+            - name: targetValue
+              value: "{{item.target}}"
+            - name: file
+              value: "{{item.artifact}}"
+            - name: gh-repo
+              value: "{{inputs.parameters.gh-repo}}"
+            - name: git-ref
+              value: "{{inputs.parameters.git-ref}}"
+        withParam: "{{inputs.parameters.targets}}"
+
+  - name: steps
+    inputs:
+      parameters:
+      - name: targetName
+      - name: targetValue
+      - name: file
+      - name: gh-repo
+      - name: git-ref
+    steps:
+    - - name: create-volume
+        template: create-volume
+        arguments:
+          parameters:
+          - name: targetName
+            value: "{{inputs.parameters.targetName}}"
+    - - name: build
+        template: build
+        arguments:
+          parameters:
+          - name: pvcName
+            value: "{{steps.create-volume.outputs.parameters.pvcName}}"
+          - name: targetValue
+            value: "{{inputs.parameters.targetValue}}"
+          - name: file
+            value: "{{inputs.parameters.file}}"
+          - name: gh-repo
+            value: "{{inputs.parameters.gh-repo}}"
+          - name: git-ref
+            value: "{{inputs.parameters.git-ref}}"
+    - - name: upload
+        template: upload
+        when: "'{{steps.build.outputs.parameters.git-tag}}' != 'undefined'"
+        arguments:
+          parameters:
+          - name: pvcName
+            value: "{{steps.create-volume.outputs.parameters.pvcName}}"
+          - name: targetValue
+            value: "{{inputs.parameters.targetValue}}"
+          - name: file
+            value: "{{inputs.parameters.file}}"
+          - name: git-tag
+            value: "{{steps.build.outputs.parameters.git-tag}}"
+          - name: gh-repo
+            value: "{{inputs.parameters.gh-repo}}"
+
+  - name: create-volume
+    inputs:
+      parameters:
+        - name: targetName
+    metadata:
+      labels:
+        app: openwrt
+    automountServiceAccountToken: true
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values: [openwrt]
+            topologyKey: kubernetes.io/hostname
+    resource:
+      action: apply
+      setOwnerReference: false
+      manifest: |
+        apiVersion: v1
+        kind: PersistentVolumeClaim
+        metadata:
+          name: openwrt-target-{{inputs.parameters.targetName}}
+        spec:
+          accessModes: ['ReadWriteOnce']
+          resources:
+            requests:
+              storage: '100Gi'
+    outputs:
+      parameters:
+        - name: pvcName
+          valueFrom:
+            jsonPath: '{.metadata.name}'
+
+  - name: build
+    inputs:
+      parameters:
+      - name: pvcName
+      - name: targetValue
+      - name: gh-repo
+      - name: git-ref
+    metadata:
+      labels:
+        app: openwrt
+    volumes:
+      - name: workdir
+        persistentVolumeClaim:
+          claimName: '{{inputs.parameters.pvcName}}'
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values: [openwrt]
+            topologyKey: kubernetes.io/hostname
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
+    container:
+      image: ghcr.io/aarnaud/openwrt-builder:latest
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+            git clone --depth 1 -b ${GIT_REF} https://github.com/${GH_REPO}.git
+            cd openwrt-build-script
+            git name-rev --tags --name-only $(git rev-parse HEAD) > /mnt/git-tag.txt
+            ./scripts/build.sh ${OPENWRT_TARGET}
+      env:
+        - name: CCACHE_DIR
+          value: "/mnt/ccache"
+        - name: OPENWRT_DIR
+          value: "/mnt/openwrt"
+        - name: OPENWRT_TARGET
+          value: "{{inputs.parameters.targetValue}}"
+        - name: GH_REPO
+          value: "{{inputs.parameters.gh-repo}}"
+        - name: GIT_REF
+          value: "{{inputs.parameters.git-ref}}"
+      volumeMounts:
+        - name: workdir
+          mountPath: /mnt
+    outputs:
+      parameters:
+        - name: git-tag
+          valueFrom:
+            path: /mnt/git-tag.txt
+
+  - name: upload
+    inputs:
+      parameters:
+      - name: pvcName
+      - name: targetValue
+      - name: file
+      - name: git-tag
+      - name: gh-repo
+    metadata:
+      labels:
+        app: openwrt
+    volumes:
+      - name: workdir
+        persistentVolumeClaim:
+          claimName: '{{inputs.parameters.pvcName}}'
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values: [openwrt]
+            topologyKey: kubernetes.io/hostname
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
+    container:
+      image: ghcr.io/aarnaud/openwrt-builder:latest
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+            echo ${OPENWRT_TARGET}
+            echo ${GIT_TAG}
+            ls -l ${OPENWRT_DIR}/${OPENWRT_FILE}
+            gh release view -R ${GH_REPO} ${GIT_TAG}  || gh release create -R ${GH_REPO} ${GIT_TAG} --generate-notes
+            gh release upload -R ${GH_REPO} ${GIT_TAG} ${OPENWRT_DIR}/${OPENWRT_FILE} --clobber
+      envFrom:
+        - secretRef:
+            name: "github"
+      env:
+        - name: OPENWRT_DIR
+          value: "/mnt/openwrt"
+        - name: OPENWRT_TARGET
+          value: "{{inputs.parameters.targetValue}}"
+        - name: OPENWRT_FILE
+          value: "{{inputs.parameters.file}}"
+        - name: GIT_TAG
+          value: "{{inputs.parameters.git-tag}}"
+        - name: GH_REPO
+          value: "{{inputs.parameters.gh-repo}}"
+      volumeMounts:
+        - name: workdir
+          mountPath: /mnt

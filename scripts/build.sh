@@ -3,7 +3,7 @@ set -e
 set -x
 
 TARGET=$1
-OPENWRT_VERSION="v22.03.6"
+OPENWRT_VERSION="v23.05.2"
 
 
 SCRIPTS_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
@@ -39,7 +39,7 @@ git reset --hard HEAD^
 git checkout -f ${OPENWRT_VERSION}
 
 # Patch kernel config to enable nf_conntrack_events
-patch ${OPENWRT_DIR}/target/linux/generic/config-5.10 < ${ROOT_DIR}/configs/kernel-config.patch
+patch ${OPENWRT_DIR}/target/linux/generic/config-5.15 < ${ROOT_DIR}/configs/kernel-config.patch
 
 rm -rf ${OPENWRT_DIR}/files
 cp -r ${ROOT_DIR}/root_files ${OPENWRT_DIR}/files

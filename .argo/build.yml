@@ -22,6 +22,14 @@ spec:
           { "name": "unifiac", "target": "unifiac", "artifact": "bin/targets/ath79/generic/openwrt-ath79-generic-ubnt_unifiac-pro-squashfs-sysupgrade.bin" },
           { "name": "x86", "target": "x86", "artifact": "bin/targets/x86/64/openwrt-x86-64-generic-ext4-combined-efi.img.gz" }
         ]
+
+  ttlStrategy:
+    secondsAfterSuccess: 1209600
+    secondsAfterFailure: 1209600
+  archiveLogs: true
+  artifactRepositoryRef:
+    configMap: artifact-repositories
+    key: minio-repository
   templates:
   - name: entrypoint
     inputs:
@@ -132,6 +140,7 @@ spec:
       parameters:
       - name: pvcName
       - name: targetValue
+      - name: file
       - name: gh-repo
       - name: git-ref
     metadata:
@@ -183,6 +192,11 @@ spec:
         - name: git-tag
           valueFrom:
             path: /mnt/git-tag.txt
+      artifacts:
+        - name: "{{inputs.parameters.targetValue}}"
+          path: "/mnt/openwrt/{{ inputs.parameters.file }}"
+          s3:
+            key: "{{workflow.name}}/{{ inputs.parameters.file }}"
 
   - name: upload
     inputs:

@@ -1,6 +1,6 @@
 # OpenWRT build script
 
-## Jenkins build
+## Release builds
 
 You can download [here](https://github.com/aarnaud/openwrt-build-script/releases)
 

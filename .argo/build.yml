@@ -22,14 +22,16 @@ spec:
           { "name": "unifiac", "target": "unifiac", "artifact": "bin/targets/ath79/generic/openwrt-ath79-generic-ubnt_unifiac-pro-squashfs-sysupgrade.bin" },
           { "name": "x86", "target": "x86", "artifact": "bin/targets/x86/64/openwrt-x86-64-generic-ext4-combined-efi.img.gz" }
         ]
-
+  podGC:
+    strategy: OnPodSuccess
+    deleteDelayDuration: 600s
   ttlStrategy:
     secondsAfterSuccess: 1209600
     secondsAfterFailure: 1209600
   archiveLogs: true
-  artifactRepositoryRef:
-    configMap: artifact-repositories
-    key: minio-repository
+  #artifactRepositoryRef:
+  #  configMap: artifact-repositories
+  #  key: minio-repository
   templates:
   - name: entrypoint
     inputs:

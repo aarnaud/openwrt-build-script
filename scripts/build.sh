@@ -3,7 +3,7 @@ set -e
 set -x
 
 TARGET=$1
-OPENWRT_VERSION="v23.05.3"
+OPENWRT_VERSION="v23.05.5"
 
 
 SCRIPTS_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )

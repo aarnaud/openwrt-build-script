@@ -20,6 +20,7 @@ spec:
           { "name": "ubnt-erx", "target": "ubnt-erx", "artifact": "bin/targets/ramips/mt7621/openwrt-ramips-mt7621-ubnt_edgerouter-x-squashfs-sysupgrade.bin" },
           { "name": "gl-mt1300", "target": "gl-mt1300", "artifact": "bin/targets/ramips/mt7621/openwrt-ramips-mt7621-glinet_gl-mt1300-squashfs-sysupgrade.bin" },
           { "name": "unifiac", "target": "unifiac", "artifact": "bin/targets/ath79/generic/openwrt-ath79-generic-ubnt_unifiac-pro-squashfs-sysupgrade.bin" },
+          { "name": "eap225-outdoor-v3", "target": "eap225-outdoor-v3", "artifact": "bin/targets/ath79/generic/openwrt-ath79-generic-tplink_eap225-outdoor-v3-squashfs-sysupgrade.bin" },
           { "name": "x86", "target": "x86", "artifact": "bin/targets/x86/64/openwrt-x86-64-generic-ext4-combined-efi.img.gz" }
         ]
   podGC:

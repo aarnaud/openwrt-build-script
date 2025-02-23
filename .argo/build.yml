@@ -167,7 +167,7 @@ spec:
       fsGroup: 1000
       fsGroupChangePolicy: "OnRootMismatch"
     container:
-      image: ghcr.io/aarnaud/openwrt-builder:latest
+      image: ghcr.io/aarnaud/openwrt-builder:develop
       command: ["/bin/bash", "-c"]
       args:
         - |
@@ -230,7 +230,7 @@ spec:
       fsGroup: 1000
       fsGroupChangePolicy: "OnRootMismatch"
     container:
-      image: ghcr.io/aarnaud/openwrt-builder:latest
+      image: ghcr.io/aarnaud/openwrt-builder:develop
       command: ["/bin/bash", "-c"]
       args:
         - |

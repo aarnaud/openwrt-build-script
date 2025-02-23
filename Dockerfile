@@ -11,10 +11,10 @@ RUN apt-get update &&\
     apt-get install -f ./gh_2.67.0_linux_amd64.deb && \
     apt-get clean && \
     useradd -m user && \
-    echo 'user ALL=NOPASSWD: ALL' > /etc/sudoers.d/user
+    echo 'ubuntu ALL=NOPASSWD: ALL' > /etc/sudoers.d/ubuntu
 
-USER user
-WORKDIR /home/user
+USER ubuntu
+WORKDIR /home/ubuntu
 
 # set dummy git config
 RUN git config --global user.name "user" && git config --global user.email "user@example.com"

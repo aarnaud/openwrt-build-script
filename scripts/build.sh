@@ -8,7 +8,7 @@ OPENWRT_VERSION="v24.10.0"
 
 SCRIPTS_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 ROOT_DIR=${SCRIPTS_DIR}/..
-OPENWRT_DIR="${OPENWRT_DIR:-default ${ROOT_DIR}/openwrt}"
+OPENWRT_DIR="${OPENWRT_DIR:-${ROOT_DIR}/openwrt}"
 cd ${ROOT_DIR}
 
 if [[ "${TARGET}" != "lamobo_R1" ]]
@@ -16,7 +16,7 @@ then
   # issue on lamobo_R1
   # ERROR: package/network/services/ppp failed to build (build variant: default)
   export CONFIG_CCACHE=y
-  export CCACHE_DIR=${CCACHE_DIR:-default /mnt/ccache}
+  export CCACHE_DIR=${CCACHE_DIR:-/mnt/ccache}
   export CCACHE_MAXSIZE=10G
   export CCACHE_COMPILERCHECK="%compiler% -dumpmachine; %compiler% -dumpversion"
   mkdir -p ${CCACHE_DIR}
@@ -45,11 +45,11 @@ rm -rf ${OPENWRT_DIR}/files
 cp -r ${ROOT_DIR}/root_files ${OPENWRT_DIR}/files
 chmod 755 ${OPENWRT_DIR}/files/etc/dropbear
 
-cp ${ROOT_DIR}/configs/${TARGET}.config ${OPENWRT_DIR}/.config
-make defconfig
-
 ./scripts/feeds update -a -f
 ./scripts/feeds install -a -f
+
+cp ${ROOT_DIR}/configs/${TARGET}.config ${OPENWRT_DIR}/.config
+make defconfig
 
 if [[ "${CLEAN_BUILD}" == "true" || "${CONFIG_CCACHE}" == "y" ]]
 then

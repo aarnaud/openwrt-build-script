@@ -169,6 +169,7 @@ spec:
       fsGroupChangePolicy: "OnRootMismatch"
     container:
       image: ghcr.io/aarnaud/openwrt-builder:develop
+      imagePullPolicy: Always
       command: ["/bin/bash", "-c"]
       args:
         - |
@@ -232,6 +233,7 @@ spec:
       fsGroupChangePolicy: "OnRootMismatch"
     container:
       image: ghcr.io/aarnaud/openwrt-builder:develop
+      imagePullPolicy: Always
       command: ["/bin/bash", "-c"]
       args:
         - |

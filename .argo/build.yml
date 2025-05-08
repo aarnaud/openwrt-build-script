@@ -15,12 +15,12 @@ spec:
       value: |
         [
           { "name": "lamobo-r1", "target": "lamobo_R1", "artifact": "bin/targets/sunxi/cortexa7/openwrt-sunxi-cortexa7-lamobo_lamobo-r1-ext4-sdcard.img.gz" },
-          { "name": "linksys-wrt1200ac", "target": "linksys-wrt1200ac", "artifact": "bin/targets/mvebu/cortexa9/openwrt-mvebu-cortexa9-linksys_wrt1200ac-squashfs-sysupgrade.bin" },
           { "name": "linksys-wrt1900ac", "target": "linksys-wrt1900ac", "artifact": "bin/targets/mvebu/cortexa9/openwrt-mvebu-cortexa9-linksys_wrt1900ac-v1-squashfs-sysupgrade.bin" },
           { "name": "ubnt-erx", "target": "ubnt-erx", "artifact": "bin/targets/ramips/mt7621/openwrt-ramips-mt7621-ubnt_edgerouter-x-squashfs-sysupgrade.bin" },
           { "name": "gl-mt1300", "target": "gl-mt1300", "artifact": "bin/targets/ramips/mt7621/openwrt-ramips-mt7621-glinet_gl-mt1300-squashfs-sysupgrade.bin" },
           { "name": "unifiac", "target": "unifiac", "artifact": "bin/targets/ath79/generic/openwrt-ath79-generic-ubnt_unifiac-pro-squashfs-sysupgrade.bin" },
           { "name": "eap225-outdoor-v3", "target": "eap225-outdoor-v3", "artifact": "bin/targets/ath79/generic/openwrt-ath79-generic-tplink_eap225-outdoor-v3-squashfs-sysupgrade.bin" },
+          { "name": "deco-m5-v3", "target": "deco-m5", "artifact": "bin/targets/ipq40xx/generic/openwrt-ipq40xx-generic-tplink_deco-m5-v3-squashfs-sysupgrade.bin" },
           { "name": "x86", "target": "x86", "artifact": "bin/targets/x86/64/openwrt-x86-64-generic-ext4-combined-efi.img.gz" }
         ]
   podGC:
@@ -171,6 +171,13 @@ spec:
       image: ghcr.io/aarnaud/openwrt-builder:develop
       imagePullPolicy: Always
       command: ["/bin/bash", "-c"]
+      resources:
+        requests:
+          memory: "2048Mi"
+          cpu: "6"
+        limits:
+          memory: "4096Mi"
+          cpu: "6"
       args:
         - |
             git clone --depth 1 -b ${GIT_REF} https://github.com/${GH_REPO}.git

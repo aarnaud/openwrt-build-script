@@ -173,10 +173,10 @@ spec:
       command: ["/bin/bash", "-c"]
       resources:
         requests:
-          memory: "2048Mi"
+          memory: "4096Mi"
           cpu: "6"
         limits:
-          memory: "4096Mi"
+          memory: "6144Mi"
           cpu: "6"
       args:
         - |

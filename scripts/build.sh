@@ -45,6 +45,7 @@ rm -rf ${OPENWRT_DIR}/files
 cp -r ${ROOT_DIR}/root_files ${OPENWRT_DIR}/files
 chmod 755 ${OPENWRT_DIR}/files/etc/dropbear
 
+make update
 ./scripts/feeds update -a -f
 ./scripts/feeds install -a -f
 

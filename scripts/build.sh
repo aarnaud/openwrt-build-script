@@ -45,12 +45,18 @@ rm -rf ${OPENWRT_DIR}/files
 cp -r ${ROOT_DIR}/root_files ${OPENWRT_DIR}/files
 chmod 755 ${OPENWRT_DIR}/files/etc/dropbear
 
-./scripts/feeds clean
+if [[ "${OPENWRT_VERSION}" != "$(cat LAST_VERSION_PULLED)" ]]
+then
+  ./scripts/feeds clean
+fi
+
 ./scripts/feeds update -a -f
 ./scripts/feeds install -a -f
 
 cp ${ROOT_DIR}/configs/${TARGET}.config ${OPENWRT_DIR}/.config
 make defconfig
+
+echo -n $OPENWRT_VERSION > LAST_VERSION_PULLED
 
 if [[ "${CLEAN_BUILD}" == "true" || "${CONFIG_CCACHE}" == "y" ]]
 then

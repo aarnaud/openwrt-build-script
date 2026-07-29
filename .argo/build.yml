@@ -208,6 +208,8 @@ spec:
           path: "/mnt/openwrt/{{ inputs.parameters.file }}"
           s3:
             key: "{{workflow.name}}/{{ inputs.parameters.file }}"
+          archive:
+            none: {}
 
   - name: upload
     inputs:

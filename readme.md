@@ -54,3 +54,15 @@ make distclean
 nukes everything you have compiled or configured and also deletes all downloaded feeds contents and package sources.
 
 *CAUTION* : In addition to all else, this will erase your build configuration (<buildroot_dir>/.config), your toolchain and all other sources. Use with care!
+
+
+## Troubleshoot 
+
+
+#### RPC call to luci/getFeatures failed with error -32000: Object not found
+
+```
+chmod 0644 /usr/share/rpcd/ucode/luci
+/etc/init.d/rpcd restart
+ubus call luci getFeatures # should return data
+```

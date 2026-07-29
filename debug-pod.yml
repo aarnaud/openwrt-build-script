@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: openwrt-debug-ubnt-erx
+  labels:
+    app: openwrt
+    role: debug
+spec:
+  restartPolicy: Never
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+  containers:
+    - name: debug
+      image: ghcr.io/aarnaud/openwrt-builder:develop
+      command: ["sleep", "infinity"]
+      env:
+        - name: CCACHE_DIR
+          value: /mnt/ccache
+        - name: OPENWRT_DIR
+          value: /mnt/openwrt
+      volumeMounts:
+        - name: workdir
+          mountPath: /mnt
+  volumes:
+    - name: workdir
+      persistentVolumeClaim:
+        claimName: openwrt-target-ubnt-erx

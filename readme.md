@@ -61,6 +61,10 @@ nukes everything you have compiled or configured and also deletes all downloaded
 
 #### RPC call to luci/getFeatures failed with error -32000: Object not found
 
+Fixed automatically on first boot by `root_files/etc/uci-defaults/99-fix-luci-rpcd-perms`
+(runs once, then deletes itself). If you still see this on a device built
+before this fix was added, apply it manually and reflash/rebuild next time:
+
 ```
 chmod 0644 /usr/share/rpcd/ucode/luci
 /etc/init.d/rpcd restart

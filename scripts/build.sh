@@ -37,7 +37,7 @@ git fetch -a
 
 git reset --hard HEAD^
 git checkout -f ${OPENWRT_VERSION}
-git clean -fd
+git clean -fd -e LAST_VERSION_PULLED
 
 # Patch kernel config to enable nf_conntrack_events
 patch ${OPENWRT_DIR}/target/linux/generic/config-6.12 < ${ROOT_DIR}/configs/kernel-config.patch

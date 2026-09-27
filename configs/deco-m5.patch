@@ -24,11 +24,11 @@ index b19a7abd9a8fc4..362e99de5b7f8f 100644
  CONFIG_LEDS_LP5523=y
  CONFIG_LEDS_LP5562=y
  CONFIG_LEDS_LP55XX_COMMON=y
-diff --git a/target/linux/ipq40xx/dts/qcom-ipq4019-deco-m5-v1.dts b/target/linux/ipq40xx/dts/qcom-ipq4019-deco-m5-v1.dts
+diff --git a/target/linux/ipq40xx/files-6.12/arch/arm/boot/dts/qcom/qcom-ipq4019-deco-m5-v1.dts b/target/linux/ipq40xx/files-6.12/arch/arm/boot/dts/qcom/qcom-ipq4019-deco-m5-v1.dts
 new file mode 100644
 index 00000000000000..c78e0dfa1ad496
 --- /dev/null
-+++ b/target/linux/ipq40xx/dts/qcom-ipq4019-deco-m5-v1.dts
++++ b/target/linux/ipq40xx/files-6.12/arch/arm/boot/dts/qcom/qcom-ipq4019-deco-m5-v1.dts
 @@ -0,0 +1,27 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
 +
@@ -57,11 +57,11 @@ index 00000000000000..c78e0dfa1ad496
 +&wifi1 {
 +	qcom,ath10k-calibration-variant = "TP-Link-Deco-M5-v1";
 +};
-diff --git a/target/linux/ipq40xx/dts/qcom-ipq4019-deco-m5-v2.dts b/target/linux/ipq40xx/dts/qcom-ipq4019-deco-m5-v2.dts
+diff --git a/target/linux/ipq40xx/files-6.12/arch/arm/boot/dts/qcom/qcom-ipq4019-deco-m5-v2.dts b/target/linux/ipq40xx/files-6.12/arch/arm/boot/dts/qcom/qcom-ipq4019-deco-m5-v2.dts
 new file mode 100644
 index 00000000000000..dd3256d29f3ff3
 --- /dev/null
-+++ b/target/linux/ipq40xx/dts/qcom-ipq4019-deco-m5-v2.dts
++++ b/target/linux/ipq40xx/files-6.12/arch/arm/boot/dts/qcom/qcom-ipq4019-deco-m5-v2.dts
 @@ -0,0 +1,27 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
 +
@@ -90,11 +90,11 @@ index 00000000000000..dd3256d29f3ff3
 +&wifi1 {
 +	qcom,ath10k-calibration-variant = "TP-Link-Deco-M5-v1";
 +};
-diff --git a/target/linux/ipq40xx/dts/qcom-ipq4019-deco-m5-v3.dts b/target/linux/ipq40xx/dts/qcom-ipq4019-deco-m5-v3.dts
+diff --git a/target/linux/ipq40xx/files-6.12/arch/arm/boot/dts/qcom/qcom-ipq4019-deco-m5-v3.dts b/target/linux/ipq40xx/files-6.12/arch/arm/boot/dts/qcom/qcom-ipq4019-deco-m5-v3.dts
 new file mode 100644
 index 00000000000000..38613afb947a78
 --- /dev/null
-+++ b/target/linux/ipq40xx/dts/qcom-ipq4019-deco-m5-v3.dts
++++ b/target/linux/ipq40xx/files-6.12/arch/arm/boot/dts/qcom/qcom-ipq4019-deco-m5-v3.dts
 @@ -0,0 +1,44 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
 +
@@ -140,11 +140,11 @@ index 00000000000000..38613afb947a78
 +&wifi1 {
 +	qcom,ath10k-calibration-variant = "TP-Link-Deco-M5-v3";
 +};
-diff --git a/target/linux/ipq40xx/dts/qcom-ipq4019-deco-m5.dtsi b/target/linux/ipq40xx/dts/qcom-ipq4019-deco-m5.dtsi
+diff --git a/target/linux/ipq40xx/files-6.12/arch/arm/boot/dts/qcom/qcom-ipq4019-deco-m5.dtsi b/target/linux/ipq40xx/files-6.12/arch/arm/boot/dts/qcom/qcom-ipq4019-deco-m5.dtsi
 new file mode 100644
 index 00000000000000..450eeeee29223f
 --- /dev/null
-+++ b/target/linux/ipq40xx/dts/qcom-ipq4019-deco-m5.dtsi
++++ b/target/linux/ipq40xx/files-6.12/arch/arm/boot/dts/qcom/qcom-ipq4019-deco-m5.dtsi
 @@ -0,0 +1,378 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
 +

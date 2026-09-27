@@ -37,9 +37,17 @@ git fetch -a
 
 git reset --hard HEAD^
 git checkout -f ${OPENWRT_VERSION}
+git clean -fd
 
 # Patch kernel config to enable nf_conntrack_events
 patch ${OPENWRT_DIR}/target/linux/generic/config-6.12 < ${ROOT_DIR}/configs/kernel-config.patch
+
+# Apply an optional per-target patch, e.g. backporting upstream device support
+# not yet present in ${OPENWRT_VERSION}
+if [[ -f ${ROOT_DIR}/configs/${TARGET}.patch ]]
+then
+  git apply ${ROOT_DIR}/configs/${TARGET}.patch
+fi
 
 rm -rf ${OPENWRT_DIR}/files
 cp -r ${ROOT_DIR}/root_files ${OPENWRT_DIR}/files

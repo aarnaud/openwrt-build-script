@@ -182,7 +182,7 @@ spec:
         - |
             git clone --depth 1 -b ${GIT_REF} https://github.com/${GH_REPO}.git
             cd openwrt-build-script
-            git name-rev --tags --name-only $(git rev-parse HEAD) > /mnt/git-tag.txt
+            git describe --tags --exact-match HEAD 2>/dev/null || echo "undefined" > /mnt/git-tag.txt
             ./scripts/build.sh ${OPENWRT_TARGET}
       env:
         - name: CCACHE_DIR
